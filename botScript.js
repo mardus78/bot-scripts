@@ -23,8 +23,6 @@ function sendMessage() {
         chatHistory.innerHTML += '<div>Bot: We have cleaners specializing in residential, commercial, and deep cleaning. What type of cleaning service are you looking for?</div>';
     }
 
-    // ... (You can continue to expand the logic based on more scenarios)
-
     // Fallback response
     else {
         chatHistory.innerHTML += '<div>Bot: I\'m sorry, I didn\'t understand that. Can you rephrase or provide more details?</div>';
@@ -33,5 +31,16 @@ function sendMessage() {
     // Clear the input field
     document.getElementById('userInput').value = '';
 }
+
+// Button Event Listener
+document.getElementById('sendBotMessage').addEventListener('click', sendMessage);
+
+// Enter Key Event Listener
+document.getElementById('userInput').addEventListener('keydown', function(e) {
+    if (e.keyCode === 13) {  // checks if the pressed key is "Enter"
+        sendMessage();
+    }
+});
+
 
 
