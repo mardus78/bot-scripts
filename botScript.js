@@ -32,15 +32,15 @@ function sendMessage() {
     document.getElementById('userInput').value = '';
 }
 
-// Button Event Listener
+// Event listeners
 document.getElementById('sendBotMessage').addEventListener('click', sendMessage);
 
-// Enter Key Event Listener
 document.getElementById('userInput').addEventListener('keydown', function(e) {
     if (e.keyCode === 13) {  // checks if the pressed key is "Enter"
         sendMessage();
     }
 });
+
 
 
 
