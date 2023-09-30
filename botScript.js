@@ -1,11 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Event listener for the "Send" button
-    document.getElementById('sendBotMessage').addEventListener('click', sendMessage);
-});
-
 function sendMessage() {
-    console.log("sendMessage called");  // Debugging line to check if function is triggered
-
     let input = document.getElementById('userInput').value;
     let chatHistory = document.getElementById('chatHistory');
 
@@ -18,14 +11,20 @@ function sendMessage() {
             'Authorization': 'Bearer RKEK5XAE5PDHHJZHYU57LTIQM2ANSG4S'
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
+        console.log(data);  // Log the response for debugging
         // Process the Wit.ai response and determine the reply
         let reply = processWitResponse(data);
         chatHistory.innerHTML += '<div>Bot: ' + reply + '</div>';
     })
     .catch(error => {
-        console.error('Error calling Wit.ai:', error);  // Debugging line to check for errors
+        console.error('Error calling Wit.ai:', error);
         chatHistory.innerHTML += '<div>Bot: Sorry, I had trouble processing that. Please try again.</div>';
     });
 
@@ -42,6 +41,7 @@ function processWitResponse(data) {
         return "I'm not sure how to respond to that.";
     }
 }
+
 
 
 
