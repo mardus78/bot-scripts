@@ -1,9 +1,21 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize chatbot UI elements
+    const chatBox = document.getElementById('chatBox');
+    const chatToggle = document.getElementById('chatToggle');
+    const chatHistory = document.getElementById('chatHistory');
+
+    chatToggle.addEventListener('click', function() {
+        chatBox.classList.toggle('open');
+    });
+
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+});
+
 function sendMessage() {
     let input = document.getElementById('userInput').value;
-    let chatHistory = document.getElementById('chatHistory');
 
     // Display user message
-    chatHistory.innerHTML += '<div>User: ' + input + '</div>';
+    document.getElementById('chatHistory').innerHTML += '<div>User: ' + input + '</div>';
 
     // Call Wit.ai API
     fetch('https://api.wit.ai/message?v=20230927&q=' + encodeURIComponent(input), {
@@ -11,21 +23,15 @@ function sendMessage() {
             'Authorization': 'Bearer RKEK5XAE5PDHHJZHYU57LTIQM2ANSG4S'
         }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log(data);  // Log the response for debugging
-        // Process the Wit.ai response and determine the reply
+        console.log(data);
         let reply = processWitResponse(data);
-        chatHistory.innerHTML += '<div>Bot: ' + reply + '</div>';
+        document.getElementById('chatHistory').innerHTML += '<div>Bot: ' + reply + '</div>';
     })
     .catch(error => {
         console.error('Error calling Wit.ai:', error);
-        chatHistory.innerHTML += '<div>Bot: Sorry, I had trouble processing that. Please try again.</div>';
+        document.getElementById('chatHistory').innerHTML += '<div>Bot: Sorry, I had trouble processing that. Please try again.</div>';
     });
 
     // Clear the input field
@@ -33,19 +39,9 @@ function sendMessage() {
 }
 
 function processWitResponse(data) {
-    // Here, you'll extract information from the Wit.ai response and determine the bot's reply.
-    // For now, let's just return the first intent's name as a placeholder.
     if (data.intents && data.intents.length > 0) {
         return data.intents[0].name;
     } else {
         return "I'm not sure how to respond to that.";
     }
 }
-
-
-
-
-
-
-
-
