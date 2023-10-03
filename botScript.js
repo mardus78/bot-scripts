@@ -20,7 +20,7 @@ function sendMessage() {
     // Call Wit.ai API
     fetch('https://api.wit.ai/message?v=20230927&q=' + encodeURIComponent(input), {
         headers: {
-            'Authorization': 'Bearer RKEK5XAE5PDHHJZHYU57LTIQM2ANSG4S'
+            'Authorization': 'Bearer QM6VVEVRHPGQQ2XONVU4JNQ6HSJWLEDK' // Updated Token
         }
     })
     .then(response => response.json())
